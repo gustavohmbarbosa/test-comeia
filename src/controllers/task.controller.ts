@@ -1,13 +1,19 @@
 import { Request, Response } from "express";
 import { TaskService } from "../services/task.service";
 import { taskServiceFactory } from "../services/task.service.factory";
+import { CreateTaskDto } from "../dtos/create-task.dto";
 
 export class TaskController {
   private static service: TaskService = taskServiceFactory();
 
   static async create(req: Request, res: Response) {
-    const task = await TaskController.service.create(req.body);
-    res.status(201).json(task);
+    try {
+      const data = new CreateTaskDto(req.body);
+      const task = await TaskController.service.create(data);
+      res.status(201).json(task);
+    } catch (e) {
+      res.status(400).json(e)
+    }
   }
 
   static async findAll(req: Request, res: Response) {
