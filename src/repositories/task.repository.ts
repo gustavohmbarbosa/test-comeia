@@ -1,8 +1,8 @@
-import { CreateTaskDto } from "../dtos/create-task.dto";
+import { CreateOrUpdateTaskDto } from "../dtos/create-task.dto";
 import { Task, ITask } from "../models/task";
 
 export class TaskRepository {
-  async create(task: CreateTaskDto) {
+  async create(task: CreateOrUpdateTaskDto) {
     console.log(task);
     return await Task.create(task);
   }
@@ -15,7 +15,7 @@ export class TaskRepository {
     return await Task.findById(id);
   }
 
-  async update(id: string, task: Partial<ITask>) {
+  async update(id: string, task: CreateOrUpdateTaskDto) {
     return await Task.findByIdAndUpdate(id, task, { new: true });
   }
 

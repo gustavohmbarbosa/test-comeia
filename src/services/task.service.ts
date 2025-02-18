@@ -1,6 +1,6 @@
 import { TaskRepository } from "../repositories/task.repository";
 import { ITask } from "../models/task";
-import { CreateTaskDto } from "../dtos/create-task.dto";
+import { CreateOrUpdateTaskDto } from "../dtos/create-task.dto";
 
 export class TaskService {
   constructor(private repository: TaskRepository) {}
@@ -9,7 +9,7 @@ export class TaskService {
     return new TaskService(repository);
   }
 
-  async create(task: CreateTaskDto) {
+  async create(task: CreateOrUpdateTaskDto) {
     return await this.repository.create(task);
   }
 
@@ -21,7 +21,7 @@ export class TaskService {
     return await this.repository.findById(id);
   }
 
-  async update(id: string, task: Partial<ITask>) {
+  async update(id: string, task: CreateOrUpdateTaskDto) {
     return await this.repository.update(id, task);
   }
 
